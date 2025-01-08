@@ -17,13 +17,10 @@ Projeto de cadastro de usuário criado como desafio teste para vaga de desenvolv
 
 ✔️ Consulta e listagem de cadastro de usuário
 
-🔹 Deploy da Aplicação
-
 🔹 Como rodar a aplicação
 
-Deploy da Aplicação
 
-https://github.com/ticishinmi/Usuario/tree/master
+
 
 ⚠️ Pré-requisitos
 

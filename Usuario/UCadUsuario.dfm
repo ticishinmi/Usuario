@@ -1,6 +1,7 @@
 inherited FCadUsuario: TFCadUsuario
   Caption = 'Cadastro de Usu'#225'rio'
   ClientHeight = 320
+  ExplicitTop = 8
   ExplicitHeight = 359
   PixelsPerInch = 96
   TextHeight = 16
@@ -218,7 +219,7 @@ inherited FCadUsuario: TFCadUsuario
         Top = 74
         Width = 115
         Height = 24
-        Style = csOwnerDrawFixed
+        Style = csDropDownList
         DataField = 'USU_PAINEL'
         DataSource = DM.dsUsuario
         Font.Charset = ANSI_CHARSET
@@ -226,7 +227,6 @@ inherited FCadUsuario: TFCadUsuario
         Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = []
-        ItemHeight = 18
         Items.Strings = (
           'ADMIN'
           'USER')

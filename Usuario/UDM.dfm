@@ -100,6 +100,7 @@ object DM: TDM
     object cdsUsuarioUSU_PAINEL: TStringField
       DisplayLabel = 'Painel'
       FieldName = 'USU_PAINEL'
+      Required = True
       Size = 30
     end
     object cdsUsuarioUSU_DTCRIA: TDateField

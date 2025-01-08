@@ -1,5 +1,5 @@
 [CONFIGURACAO]
-Database=D:\Projeto Linx\Linx.FDB
+Database=D:\Projeto Linx\Usuario\Linx.FDB
 DriverID=FB
 User_Name=SYSDBA
 Password=masterkey

@@ -17,8 +17,7 @@ Firebird 2.5
 
 ### Como rodar a aplicação ▶️
 
-Salve o banco de dados (Linx.FDB), o executável (Usuario.exe), a dll (fbclient.dll) e o arquivo (opcoes.txt) no caminho desejável
-Informe o endereço do banco de dados após a opção "Database" no arquivo opcoes.txt
+Salve o banco de dados (Linx.FDB), o executável (Usuario.exe), a dll (fbclient.dll) e o arquivo (opcoes.txt) no local desejado, e após feito isso informe o endereço escolhido no arquivo opcoes.txt no campo Database
 
 <h4 align="center">
 Status do Projeto: Concluído ✔️

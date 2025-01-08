@@ -17,8 +17,6 @@ type
   TDM = class(TDataModule)
     Connection: TFDConnection;
     Transaction: TFDTransaction;
-    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
-    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     QuGerarID: TFDQuery;
     QuBuscarString: TFDQuery;
     QuBuscaCalcFields: TFDQuery;

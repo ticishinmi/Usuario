@@ -20,17 +20,6 @@ object DM: TDM
     Left = 47
     Top = 8
   end
-  object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    VendorLib = 'D:\Projeto Linx\fbclient.dll'
-    Left = 79
-    Top = 8
-  end
-  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
-    Provider = 'Forms'
-    ScreenCursor = gcrAppWait
-    Left = 110
-    Top = 8
-  end
   object QuGerarID: TFDQuery
     Connection = Connection
     SQL.Strings = (

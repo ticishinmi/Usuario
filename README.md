@@ -1,10 +1,18 @@
-Desafio técnico Linx - CRUD de Usuários
-       
-Status do Projeto: Concluído ✔️
+<h1>Desafio técnico Linx - CRUD de Usuários</h1>
 
+<p align="center">
+ <a href="#Descricao">Descrição</a>
+ <a href="#Funcionalidades">Funcionalidades</a>
+ <a href="#prerequisitos">Pré Requisitos</a>   
+ <a href="#status">Status</a>          
+</p>
+
+# Descricao
+<p>
 🔹 Descrição do projeto
 
 Projeto de cadastro de usuário criado como desafio teste para vaga de desenvolvedor Senior
+</p>
 
 
 🔹 Funcionalidades
@@ -33,3 +41,7 @@ git clone https://github.com/React-Bootcamp-WoMarkersCode/certificate-generator
 ...
 
 Coloque um passo a passo para rodar a sua aplicação. Dica: clone o próprio projeto e verfique se o passo a passo funciona
+
+<h4 align="center">
+Status do Projeto: Concluído ✔️
+</h4>

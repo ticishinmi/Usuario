@@ -716,22 +716,22 @@ object FPadrao: TFPadrao
     Panels = <
       item
         Text = 'ID: FPadrao'
-        Width = 100
+        Width = 140
       end
       item
         Alignment = taCenter
         Text = 'F2 - Novo'
-        Width = 80
+        Width = 70
       end
       item
         Alignment = taCenter
         Text = 'F3 - Alterar'
-        Width = 80
+        Width = 78
       end
       item
         Alignment = taCenter
         Text = 'F4 - Salvar'
-        Width = 80
+        Width = 76
       end
       item
         Alignment = taCenter
@@ -741,7 +741,7 @@ object FPadrao: TFPadrao
       item
         Alignment = taCenter
         Text = 'Esc - Fechar'
-        Width = 90
+        Width = 70
       end>
   end
   object PopupMenu1: TPopupMenu

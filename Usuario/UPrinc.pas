@@ -13,7 +13,6 @@ type
     StatusBar1: TStatusBar;
     MainMenu1: TMainMenu;
     Cadastros1: TMenuItem;
-    img_logo: TImage;
     Usurio1: TMenuItem;
     PopupMenu1: TPopupMenu;
     Usuario1: TMenuItem;

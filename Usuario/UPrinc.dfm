@@ -19,16 +19,6 @@ object FPrinc: TFPrinc
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 16
-  object img_logo: TImage
-    Left = 0
-    Top = 416
-    Width = 1051
-    Height = 167
-    Align = alCustom
-    Anchors = [akLeft, akRight, akBottom]
-    Center = True
-    Transparent = True
-  end
   object StatusBar1: TStatusBar
     Left = 0
     Top = 589
@@ -45,7 +35,7 @@ object FPrinc: TFPrinc
     SimplePanel = True
   end
   object MainMenu1: TMainMenu
-    Left = 8
+    Left = 80
     Top = 16
     object Cadastros1: TMenuItem
       Caption = 'Cadastro'
@@ -57,7 +47,7 @@ object FPrinc: TFPrinc
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 48
+    Left = 192
     Top = 16
     object Usuario1: TMenuItem
       Caption = 'Usu'#225'rio'

@@ -1,10 +1,14 @@
 <h1>Desafio técnico Linx - CRUD de Usuários</h1>
 
-<p align="center">
- <a href="#Descricao">Descrição</a>
- <a href="#Funcionalidades">Funcionalidades</a>
- <a href="#prerequisitos">Pré Requisitos</a>   
- <a href="#status">Status</a>          
+## Descrição do Projeto
+<p align="center">Projeto de cadastro de usuário criado como desafio teste para vaga de desenvolvedor Senior</p>
+
+
+<p align="center"> 
+ <a href="#Descricao">Descrição</a> • 
+ <a href="#Funcionalidades">Funcionalidades</a> •
+ <a href="#prerequisitos">Pré Requisitos</a> •  
+ <a href="#status">Status</a> •         
 </p>
 
 # Descricao
@@ -41,6 +45,7 @@ git clone https://github.com/React-Bootcamp-WoMarkersCode/certificate-generator
 ...
 
 Coloque um passo a passo para rodar a sua aplicação. Dica: clone o próprio projeto e verfique se o passo a passo funciona
+<br>
 
 <h4 align="center">
 Status do Projeto: Concluído ✔️

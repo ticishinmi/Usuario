@@ -2,26 +2,32 @@ Desafio técnico Linx - CRUD de Usuários
        
 Status do Projeto: Concluído ✔️
 
-Tópicos
 🔹 Descrição do projeto
+
 Projeto de cadastro de usuário criado como desafio teste para vaga de desenvolvedor Senior
 
+
 🔹 Funcionalidades
+
 ✔️ Inserção de novo usuário
+
 ✔️ Alteração de usuário já cadastrado
+
 ✔️ Exclusão de usuário cadastro
+
 ✔️ Consulta e listagem de cadastro de usuário
 
 🔹 Deploy da Aplicação
 
 🔹 Como rodar a aplicação
 
-Layout ou Deploy da Aplicação 💨
-Link do deploy da aplicação. Exemplo com netlify: https://certificates-for-everyone-womakerscode.netlify.app/
+Deploy da Aplicação
 
+https://github.com/ticishinmi/Usuario/tree/master
 
-Pré-requisitos
-⚠️ Firebird 2.5
+⚠️ Pré-requisitos
+
+Firebird 2.5
 
 Como rodar a aplicação ▶️
 No terminal, clone o projeto:

@@ -1,0 +1,278 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 592
+  Width = 826
+  object Connection: TFDConnection
+    Params.Strings = (
+      'Database=D:\Projeto Linx\Usuario\LINX.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Protocol=TCPIP'
+      'Server=localhost'
+      'DriverID=FB')
+    Connected = True
+    LoginPrompt = False
+    Transaction = Transaction
+    Left = 104
+    Top = 8
+  end
+  object Transaction: TFDTransaction
+    Connection = Connection
+    Left = 135
+    Top = 8
+  end
+  object FDPhysFBDriverLink1: TFDPhysFBDriverLink
+    VendorLib = 'D:\Projeto Linx\fbclient.dll'
+    Left = 167
+    Top = 8
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    ScreenCursor = gcrAppWait
+    Left = 198
+    Top = 8
+  end
+  object QuGerarID: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      '')
+    Left = 376
+    Top = 8
+  end
+  object QuBuscarString: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      '')
+    Left = 408
+    Top = 8
+  end
+  object QuBuscaCalcFields: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      '')
+    Left = 286
+    Top = 8
+  end
+  object QuBusca: TFDQuery
+    Connection = Connection
+    SQL.Strings = (
+      '')
+    Left = 224
+    Top = 8
+  end
+  object cdsItAuditoria: TClientDataSet
+    Aggregates = <>
+    CommandText = 'SELECT * FROM ITAUDITORIA'
+    Params = <>
+    ProviderName = 'dspItAuditoria'
+    Left = 383
+    Top = 113
+    object cdsItAuditoriaCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+      Required = True
+    end
+    object cdsItAuditoriaCODAUDITORIA: TIntegerField
+      FieldName = 'CODAUDITORIA'
+    end
+    object cdsItAuditoriaCAMPO: TStringField
+      FieldName = 'CAMPO'
+      Size = 50
+    end
+    object cdsItAuditoriaTITULO: TStringField
+      FieldName = 'TITULO'
+      Size = 50
+    end
+    object cdsItAuditoriaVALORANTERIOR: TStringField
+      FieldName = 'VALORANTERIOR'
+      Size = 500
+    end
+    object cdsItAuditoriaVALORNOVO: TStringField
+      FieldName = 'VALORNOVO'
+      Size = 500
+    end
+  end
+  object dsItAuditoria: TDataSource
+    DataSet = cdsItAuditoria
+    Left = 415
+    Top = 113
+  end
+  object dspItAuditoria: TDataSetProvider
+    DataSet = fqItAuditoria
+    Options = [poPropogateChanges, poAllowCommandText, poUseQuoteChar]
+    Left = 351
+    Top = 113
+  end
+  object fqItAuditoria: TFDQuery
+    Connection = Connection
+    Transaction = Transaction
+    SQL.Strings = (
+      'SELECT * FROM ITAUDITORIA')
+    Left = 319
+    Top = 113
+  end
+  object IBAdmin: TIBDatabase
+    DatabaseName = 'D:\Projeto Linx\Usuario\LINX.FDB'
+    Params.Strings = (
+      'user_name=SYSDBA'
+      'password=masterkey')
+    LoginPrompt = False
+    DefaultTransaction = Transacao
+    ServerType = 'IBServer'
+    Left = 15
+    Top = 6
+  end
+  object Transacao: TIBTransaction
+    DefaultDatabase = IBAdmin
+    DefaultAction = TACommitRetaining
+    Params.Strings = (
+      'read_committed'
+      'rec_version'
+      'nowait')
+    Left = 46
+    Top = 6
+  end
+  object cdsUsuario: TClientDataSet
+    Aggregates = <>
+    CommandText = 'SELECT * FROM USUARIO'
+    Params = <>
+    ProviderName = 'dspUsuario'
+    OnNewRecord = cdsUsuarioNewRecord
+    Left = 72
+    Top = 65
+    object cdsUsuarioUSU_COD: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'USU_COD'
+      Required = True
+    end
+    object cdsUsuarioUSU_NOME: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'USU_NOME'
+      Size = 150
+    end
+    object cdsUsuarioUSU_USUARIO: TStringField
+      DisplayLabel = 'Usu'#225'rio'
+      FieldName = 'USU_USUARIO'
+      Size = 30
+    end
+    object cdsUsuarioUSU_SENHA: TStringField
+      DisplayLabel = 'Senha'
+      FieldName = 'USU_SENHA'
+      Size = 10
+    end
+    object cdsUsuarioUSU_EMAIL: TStringField
+      DisplayLabel = 'E-mail'
+      FieldName = 'USU_EMAIL'
+      Size = 100
+    end
+    object cdsUsuarioUSU_PAINEL: TStringField
+      DisplayLabel = 'Painel'
+      FieldName = 'USU_PAINEL'
+      Size = 30
+    end
+    object cdsUsuarioUSU_DTCRIA: TDateField
+      DisplayLabel = 'Cria'#231#227'o'
+      FieldName = 'USU_DTCRIA'
+    end
+    object cdsUsuarioUSU_DTATU: TDateField
+      DisplayLabel = #218'ltima atualiza'#231#227'o'
+      FieldName = 'USU_DTATU'
+    end
+    object cdsUsuarioUSU_STATUS: TStringField
+      DisplayLabel = 'Status'
+      FieldName = 'USU_STATUS'
+      Size = 10
+    end
+  end
+  object dsUsuario: TDataSource
+    DataSet = cdsUsuario
+    Left = 104
+    Top = 65
+  end
+  object dspUsuario: TDataSetProvider
+    DataSet = fqUsuario
+    Options = [poPropogateChanges, poAllowCommandText, poUseQuoteChar]
+    Left = 40
+    Top = 65
+  end
+  object fqUsuario: TFDQuery
+    Connection = Connection
+    Transaction = Transaction
+    SQL.Strings = (
+      'SELECT * FROM USUARIO')
+    Left = 8
+    Top = 65
+  end
+  object cdsAuditoria: TClientDataSet
+    Aggregates = <>
+    CommandText = 'SELECT * FROM AUDITORIA'
+    Params = <>
+    ProviderName = 'dspAuditoria'
+    Left = 383
+    Top = 65
+    object cdsAuditoriaCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cdsAuditoriaTABELA: TStringField
+      FieldName = 'TABELA'
+      Origin = 'TABELA'
+      Size = 50
+    end
+    object cdsAuditoriaOPERACAO: TStringField
+      FieldName = 'OPERACAO'
+      Origin = 'OPERACAO'
+      FixedChar = True
+      Size = 9
+    end
+    object cdsAuditoriaPKEY1: TStringField
+      FieldName = 'PKEY1'
+      Origin = 'PKEY1'
+      Size = 30
+    end
+    object cdsAuditoriaPKEY1VALOR: TStringField
+      FieldName = 'PKEY1VALOR'
+      Origin = 'PKEY1VALOR'
+      Size = 24
+    end
+    object cdsAuditoriaPKEY2: TStringField
+      FieldName = 'PKEY2'
+      Origin = 'PKEY2'
+      Size = 30
+    end
+    object cdsAuditoriaPKEY2VALOR: TStringField
+      FieldName = 'PKEY2VALOR'
+      Origin = 'PKEY2VALOR'
+      Size = 24
+    end
+    object cdsAuditoriaDATA: TSQLTimeStampField
+      FieldName = 'DATA'
+      Origin = '"DATA"'
+    end
+    object cdsAuditoriaUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Origin = 'USUARIO'
+      Size = 50
+    end
+  end
+  object dsAuditoria: TDataSource
+    DataSet = cdsAuditoria
+    Left = 415
+    Top = 65
+  end
+  object dspAuditoria: TDataSetProvider
+    DataSet = fqAuditoria
+    Options = [poPropogateChanges, poAllowCommandText, poUseQuoteChar]
+    Left = 351
+    Top = 65
+  end
+  object fqAuditoria: TFDQuery
+    Connection = Connection
+    Transaction = Transaction
+    SQL.Strings = (
+      'SELECT * FROM AUDITORIA')
+    Left = 319
+    Top = 65
+  end
+end

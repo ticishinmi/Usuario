@@ -1,0 +1,523 @@
+object FAuditoria: TFAuditoria
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Auditoria'
+  ClientHeight = 388
+  ClientWidth = 610
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'Arial'
+  Font.Style = []
+  OldCreateOrder = False
+  PopupMenu = PopupMenu1
+  Position = poMainFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Panel2: TPanel
+    Left = 0
+    Top = 0
+    Width = 610
+    Height = 81
+    Align = alTop
+    BevelOuter = bvNone
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    DesignSize = (
+      610
+      81)
+    object Label1: TLabel
+      Left = 8
+      Top = 35
+      Width = 123
+      Height = 18
+      Caption = 'Data de cadastro:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 306
+      Top = 35
+      Width = 172
+      Height = 18
+      Anchors = [akTop, akRight]
+      Caption = 'Data da '#250'ltima altera'#231#227'o:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitLeft = 296
+    end
+    object labDataCad: TLabel
+      Left = 133
+      Top = 35
+      Width = 112
+      Height = 17
+      Caption = '00/00/0000 00:00'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
+    object labDataAlt: TLabel
+      Left = 480
+      Top = 35
+      Width = 112
+      Height = 17
+      Anchors = [akTop, akRight]
+      Caption = '00/00/0000 00:00'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      ExplicitLeft = 470
+    end
+    object Label5: TLabel
+      Left = 72
+      Top = 58
+      Width = 59
+      Height = 18
+      Caption = 'Usu'#225'rio:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 419
+      Top = 58
+      Width = 59
+      Height = 18
+      Anchors = [akTop, akRight]
+      Caption = 'Usu'#225'rio:'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitLeft = 409
+    end
+    object labUsuCad: TLabel
+      Left = 133
+      Top = 58
+      Width = 150
+      Height = 17
+      AutoSize = False
+      Caption = 'usuario'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
+    object labUsuAlt: TLabel
+      Left = 480
+      Top = 59
+      Width = 150
+      Height = 17
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      Caption = 'usuario'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      ExplicitLeft = 470
+    end
+    object labTitulo: TLabel
+      Left = 0
+      Top = 2
+      Width = 601
+      Height = 27
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Titulo'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 81
+    Width = 610
+    Height = 307
+    ActivePage = tsAuditoria
+    Align = alClient
+    TabOrder = 1
+    object tsAuditoria: TTabSheet
+      Caption = 'Auditoria'
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 602
+        Height = 276
+        Align = alClient
+        DataSource = dsAuditoria
+        DrawingStyle = gdsGradient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        ParentFont = False
+        TabOrder = 0
+        TitleFont.Charset = ANSI_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -13
+        TitleFont.Name = 'Arial'
+        TitleFont.Style = []
+        OnDblClick = DBGrid1DblClick
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'OPERACAO'
+            Width = 106
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DATA'
+            Width = 120
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'USUARIO'
+            Width = 335
+            Visible = True
+          end>
+      end
+    end
+    object tsItemAuditoria: TTabSheet
+      Caption = 'Item Auditoria'
+      ImageIndex = 1
+      object DBGrid2: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 602
+        Height = 235
+        Align = alClient
+        DataSource = dsItAuditoria
+        DrawingStyle = gdsGradient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        ParentFont = False
+        TabOrder = 0
+        TitleFont.Charset = ANSI_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -13
+        TitleFont.Name = 'Arial'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'TITULO'
+            Width = 150
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'VALORANTERIOR'
+            Width = 200
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'VALORNOVO'
+            Width = 200
+            Visible = True
+          end>
+      end
+      object Panel1: TPanel
+        Left = 0
+        Top = 235
+        Width = 602
+        Height = 41
+        Align = alBottom
+        BevelOuter = bvNone
+        TabOrder = 1
+        object Image1: TImage
+          Left = 0
+          Top = 2
+          Width = 44
+          Height = 39
+          Cursor = crHandPoint
+          Center = True
+          IncrementalDisplay = True
+          Picture.Data = {
+            0B546478504E47496D61676589504E470D0A1A0A0000000D4948445200000020
+            000000200806000000737A7AF4000000017352474200AECE1CE9000000046741
+            4D410000B18F0BFC610500000778494441545847B5960950546712801B091164
+            57314481396018180E9DE11A41A2B2092241CB235112F748D61040410D72288B
+            8028186E874B8D2546833AC00C661819852844123409A71CCA2187423482E6D8
+            4ADC8DD964CD566FFFF050C27A84ADD0555FCD9BF7FED75F77FF7F0DC044C23F
+            7E06A8BEF402E5756F69E9ADD76AB477165B59497FC73D9DC470F0D287A3375D
+            E1C437BEA0195A7BB864F065CCE99E8145DF4A41EC3AC905C468F9A0FBD78BA0
+            1A5CBA5A7BFB8D1F0E5EB5C1DC6E53DCD7C74B3B74D3825B3509E11D6404A577
+            1780EAB6CF33DA5B7FAD51DEF0C1EC2B26B8B7C71CF37A7978F006DFF0959DD3
+            B9D5BF61CC3007C8699580F68E1F940CAE8AD6DCFA33EEED36C3BCEE5924B6A0
+            6B0BCCEB313F983F68C6BDF11BC6EB1933E1F43D6F281AF491696F070C1CEE97
+            D3B86792D87C58BCB7874FDF2D707FAFAD5BE1F515B4352B20BB6E216CD8670B
+            F3FD7F0F06465CA289C6B3D60047879CE9902D6187EC90FAE6EAE171E7F69891
+            98A424CE635CE1D17D333C3AE08DC73EF745E58D95CD9A5B7FD97FF2EF6FF897
+            7CB3D2E8E4DDD590DBB60096879BC3D313399B594D1228BEB5D8FDE497013F1C
+            E89360CE15D3916E39695E378F4E3D0F73BB04548000B33ACC51D1618699EDE6
+            C46CCCEE14E3917E5F2CE85FDE5632F87AA47268C5340D15B355258559365338
+            CB63627FBB0C4E0CADFA3EABCB846416F7C5C3D26E92923887893BF9742D24B9
+            90AE05A868B7C4CC0EE2B200D32FF131B58D87A9AD3CCCEFF3C1A3FDFE9A82CF
+            978BD5DFBD049BDE7304D0E3640F8BBDED7321BF7FCE8F39EC808D8AB96E73AE
+            F0C788591196F7C519ED42CCBC64851997AD30ADCD928A1051115698DC2CC4A4
+            66CAD5B9008F5CF557E65FF3D37FF78B25C09F6BC019C7456AAD25ECBFC6F3FD
+            8598A4595D23E22CEA780FEB98A47B2E0BC7883969AB880AB0C2D4166B4C6916
+            61728B1877375B6352A308131A04F84E97DFDDBD9D4B9C0BBE5E0622F934CE3A
+            269E11E8C381EB02C8EBE52F64A37D306612B78F155B613A759BC1759BD66A85
+            296DD654C003F1DB4C7CD10677378A31A9C916131B6D70479D08335B3D5171E9
+            854507871683B1E943F6C360AA1EECEB17406E8FC091C4FF191D3313678E13B3
+            31A750B7C9C36231265F1C11EF26711289131B6C7127897735487067BD2D26D4
+            D961ECA7624C699A4F452FB4D856E1C459C7C594A7F420A5890F393D42218DF9
+            FBD131A7B589463A1E116F4D6DB316665FB37151F48A97A577D94424B7DA1427
+            36DADED945E25D8D24A5CF847A3B8CAF93605CAD3DC67F6687DB3F75C0E8F3B6
+            98D4F05C434AA70758CC79CC8F4652AD00B2BB452624FDEAFEFE8E8EB9557C24
+            A9D11A8C674E017B2F23F00B37852D5A21640DD843F225893CA15E52B1833A8E
+            27711C8963491CF3893DC65C70C4E89A39C3C4D639C996C6F238DB2322BA9C0F
+            8A3EEBA7497C7558FC60CC3715D7EC60EAB45FEEA3DE53007E51B320A3D711E2
+            EBED17C55E70B8B7FDBC23C6D438E0DFCE33B1236EFB782E6EAD9E835135D2AC
+            20B503F7E66322F85D3350F488E1ED6671CBF0FE368DEC6F6A8764BACB8A87FF
+            2162854556DA41DC678ED6DB3E9E835B491C45E2C88FA418513D17C3CFC930FC
+            43594B749D0BF7C61322E0800564F64A80C4D5BBEAD9FE4A30A945B266ED9EC7
+            8F903A06EA3832EA9C1423491C312C76C22D5532DC5CE9FCCFE84639B7F257C4
+            F2E86721A3CF1EE8609DD841076B67A3C3A137DFB3E49E3E3C846EC6B0BDC119
+            B67C28C5B04A270C3B2BC3B7CE38E1E6B32EB8A9C219B7D6CFE356FECAF00A34
+            85F43EDADF5AFB9C8406C7C2C02714C022AC52066155CE1D6F9D75C28D675C30
+            F403570C2D77C190D36EDF45D4BA73AB2610B265D321BADA8EB08735297CEEEE
+            A323B8D409A8E3A68D4C5C41E272570C3E2DC7E053F24F42CE4C7002138DD98E
+            C6107E611E8454B8FDBC9E1307E9E66160D93C0C2E778FF13F30975B3949B14E
+            ED0C1BCAE52FADD7B961104903CBE4843B15E18EA1551EC6CEAF4EE2FF934B13
+            ED20A4D203A8DBAF87C52465628EDD9BCF3FC7AD9C8460F28DE73C214827AF1A
+            231DE5E2A68F3CC1F54F4FF815FC7F424F5F0FFE58E00CA155F349EEFEC13831
+            A331849EF9EF9F84BD97BE3C1B36567BC2FA0A0F3312F58D4A03D9A1D3C9F14D
+            9D5BDA862A77589965CFBDF18830343404232323108BC5201289C0D2D2123C3C
+            3CC0D3D3F37F99EF090B9FF7846095178D9CBA2E738F6252926180CE05D7E964
+            1850E67632F0A4BB20ECB42FAC895D04FA600886530D391B17A9A9A9A056ABA1
+            BCBC1C4E9D3A053A9D0ECACACAEEA3D56A197A84C15834A51A8363DAFC299B74
+            DEAFAC2B930DAD3B25C5D7740E18AA7DA165E7FBC1717B547126EF142AE098B2
+            00D4C735F0BEAA74383773309746A301854201A052A90C0B0B0BE5C42A2288D8
+            4E241279C411E23051449C194BB1525D9152B26520BA742DA6A823BEDD579CDE
+            5D74BCB8A2E47869A9EAF8091D3D2F2C52161F2E5416B11C2C17CBC972330773
+            C9991BE8C28C8827D4C405A28D1820BE20BE22EE10FFE060D73F11F7889F49F2
+            6F92FDA852AA7F2A52AAD87DC6F8F52C07CBC572B2DCCCC15CCC69C60A18459F
+            30264C081EC1276C0919E134863F103E8F803D1BBB96BDCB72B05C2C27CBCD1C
+            CC45CE42F82FAC0ED2DC3725D4B80000000049454E44AE426082}
+          Transparent = True
+          OnClick = Image1Click
+        end
+      end
+    end
+  end
+  object cdsAuditoria: TClientDataSet
+    Aggregates = <>
+    CommandText = 'SELECT * FROM AUDITORIA'
+    Params = <>
+    ProviderName = 'dspAuditoria'
+    Left = 383
+    Top = 65
+    object cdsAuditoriaCODIGO: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cdsAuditoriaTABELA: TStringField
+      DisplayLabel = 'Tabela'
+      FieldName = 'TABELA'
+      Origin = 'TABELA'
+      Size = 50
+    end
+    object cdsAuditoriaOPERACAO: TStringField
+      DisplayLabel = 'Opera'#231#227'o'
+      FieldName = 'OPERACAO'
+      Origin = 'OPERACAO'
+      FixedChar = True
+      Size = 9
+    end
+    object cdsAuditoriaPKEY1: TStringField
+      DisplayLabel = 'Chave'
+      FieldName = 'PKEY1'
+      Origin = 'PKEY1'
+      Size = 30
+    end
+    object cdsAuditoriaPKEY1VALOR: TStringField
+      DisplayLabel = 'Valor Chave'
+      FieldName = 'PKEY1VALOR'
+      Origin = 'PKEY1VALOR'
+      Size = 24
+    end
+    object cdsAuditoriaPKEY2: TStringField
+      DisplayLabel = 'Chave 2'
+      FieldName = 'PKEY2'
+      Origin = 'PKEY2'
+      Size = 30
+    end
+    object cdsAuditoriaPKEY2VALOR: TStringField
+      DisplayLabel = 'Chave 2 Valor'
+      FieldName = 'PKEY2VALOR'
+      Origin = 'PKEY2VALOR'
+      Size = 24
+    end
+    object cdsAuditoriaDATA: TSQLTimeStampField
+      DisplayLabel = 'Data'
+      FieldName = 'DATA'
+      Origin = '"DATA"'
+    end
+    object cdsAuditoriaUSUARIO: TStringField
+      DisplayLabel = 'Usu'#225'rio'
+      FieldName = 'USUARIO'
+      Origin = 'USUARIO'
+      Size = 50
+    end
+  end
+  object dsAuditoria: TDataSource
+    DataSet = cdsAuditoria
+    Left = 415
+    Top = 65
+  end
+  object dspAuditoria: TDataSetProvider
+    DataSet = fqAuditoria
+    Options = [poAllowMultiRecordUpdates, poPropogateChanges, poAllowCommandText, poUseQuoteChar]
+    Left = 351
+    Top = 65
+  end
+  object fqAuditoria: TFDQuery
+    ObjectView = False
+    Connection = DM.Connection
+    SQL.Strings = (
+      'SELECT * FROM AUDITORIA')
+    Left = 319
+    Top = 65
+  end
+  object fqItAuditoria: TFDQuery
+    Connection = DM.Connection
+    FetchOptions.AssignedValues = [evCache, evDetailOptimize]
+    SQL.Strings = (
+      'SELECT * FROM ITAUDITORIA')
+    Left = 319
+    Top = 113
+    ParamData = <
+      item
+        Position = 1
+        Name = 'CODAUDITORIA'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 1
+      end>
+  end
+  object dspItAuditoria: TDataSetProvider
+    DataSet = fqItAuditoria
+    Options = [poPropogateChanges, poAllowCommandText, poUseQuoteChar]
+    Left = 351
+    Top = 113
+  end
+  object cdsItAuditoria: TClientDataSet
+    Aggregates = <>
+    CommandText = 'SELECT * FROM ITAUDITORIA'
+    IndexFieldNames = 'CODAUDITORIA'
+    MasterFields = 'CODIGO'
+    MasterSource = dsAuditoria
+    Params = <>
+    ProviderName = 'dspItAuditoria'
+    Left = 383
+    Top = 113
+    object cdsItAuditoriaCODIGO: TIntegerField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object cdsItAuditoriaCODAUDITORIA: TIntegerField
+      DisplayLabel = 'C'#243'd. Auditoria'
+      FieldName = 'CODAUDITORIA'
+      Origin = 'CODAUDITORIA'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object cdsItAuditoriaCAMPO: TStringField
+      DisplayLabel = 'Campo'
+      FieldName = 'CAMPO'
+      Origin = 'CAMPO'
+      Size = 50
+    end
+    object cdsItAuditoriaTITULO: TStringField
+      DisplayLabel = 'Campo'
+      FieldName = 'TITULO'
+      Origin = 'TITULO'
+      Size = 50
+    end
+    object cdsItAuditoriaVALORANTERIOR: TStringField
+      DisplayLabel = 'Valor Anterior'
+      FieldName = 'VALORANTERIOR'
+      Origin = 'VALORANTERIOR'
+      Size = 500
+    end
+    object cdsItAuditoriaVALORNOVO: TStringField
+      DisplayLabel = 'Valor Novo'
+      FieldName = 'VALORNOVO'
+      Origin = 'VALORNOVO'
+      Size = 500
+    end
+  end
+  object dsItAuditoria: TDataSource
+    DataSet = cdsItAuditoria
+    Left = 415
+    Top = 113
+  end
+  object PopupMenu1: TPopupMenu
+    OnChange = PopupMenu1Change
+    Left = 108
+    Top = 180
+    object miVoltar: TMenuItem
+      Caption = 'Voltar'
+      ShortCut = 16455
+      OnClick = Image1Click
+    end
+    object Fechar1: TMenuItem
+      Caption = 'Fechar'
+      ShortCut = 27
+      OnClick = Fechar1Click
+    end
+  end
+end

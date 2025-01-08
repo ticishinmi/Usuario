@@ -1,0 +1,22 @@
+program Usuario;
+
+uses
+  Vcl.Forms,
+  UDM in 'UDM.pas' {DM: TDataModule},
+  UPrinc in 'UPrinc.pas' {FPrinc},
+  UCadPadrao in 'UCadPadrao.pas' {FPadrao},
+  UAuditoria in 'UAuditoria.pas' {FAuditoria},
+  UPesquisaIBO in 'UPesquisaIBO.pas' {FPesquisaIBO};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFPrinc, FPrinc);
+  Application.CreateForm(TFPadrao, FPadrao);
+  Application.CreateForm(TFAuditoria, FAuditoria);
+  Application.CreateForm(TFPesquisaIBO, FPesquisaIBO);
+  Application.Run;
+end.

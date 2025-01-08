@@ -1,0 +1,8 @@
+[CONFIGURACAO]
+Database=D:\Projeto Linx\Usuario\Linx.FDB
+DriverID=FB
+User_Name=SYSDBA
+Password=masterkey
+CharacterSet=WIN1252
+Server=Localhost
+

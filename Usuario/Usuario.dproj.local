@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025/01/07 20:05:11.000.539,=C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/01/07 20:05:41.000.817,C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\Unit1.dfm=C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\ULinx.dfm</Transaction>
+    <Transaction>2025/01/07 20:05:41.000.817,C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\Unit1.pas=C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\ULinx.pas</Transaction>
+    <Transaction>2025/01/07 20:05:47.000.847,C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\Project1.dproj=C:\Users\tici2\OneDrive\Documentos\RAD Studio\Projects\Usuario.dproj</Transaction>
+    <Transaction>2025/01/07 20:08:37.000.586,=D:\Projeto Linx\Usuario\UDM.pas</Transaction>
+    <Transaction>2025/01/07 20:28:39.000.417,=D:\Projeto Linx\Usuario\UCadPadrao.pas</Transaction>
+    <Transaction>2025/01/07 20:35:42.000.092,=D:\Projeto Linx\Usuario\UPrinc.pas</Transaction>
+    <Transaction>2025/01/07 20:36:02.000.097,D:\Projeto Linx\Usuario\ULinx.pas=</Transaction>
+    <Transaction>2025/01/07 20:40:23.000.078,D:\Projeto Linx\Usuario\UCadPadrao.pas=</Transaction>
+    <Transaction>2025/01/07 20:40:36.000.685,=D:\Projeto Linx\Usuario\UCadPadrao.pas</Transaction>
+    <Transaction>2025/01/07 20:40:42.000.076,=D:\Projeto Linx\Usuario\UAuditoria.pas</Transaction>
+    <Transaction>2025/01/07 20:40:55.000.731,=D:\Projeto Linx\Usuario\UPesquisaIBO.pas</Transaction>
+    <Transaction>2025/01/07 20:45:30.000.905,=D:\Projeto Linx\Usuario\UConfGrade.pas</Transaction>
+    <Transaction>2025/01/07 21:02:03.000.806,=D:\Projeto Linx\Usuario\UCadUsuario.pas</Transaction>
+    <Transaction>2025/01/07 23:35:43.000.634,D:\Projeto Linx\Usuario\UAuditoria.pas=</Transaction>
+    <Transaction>2025/01/08 01:51:41.778,=D:\Projeto Linx\Usuario\UFuncao.pas</Transaction>
+    <Transaction>2025/01/08 01:57:40.457,D:\Projeto Linx\Usuario\UConfGrade.pas=</Transaction>
+  </Transactions>
+</BorlandProject>

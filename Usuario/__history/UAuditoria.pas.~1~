@@ -1,0 +1,180 @@
+unit UAuditoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Datasnap.Provider, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, dxGDIPlusClasses,
+  Vcl.Menus;
+
+type
+  TFAuditoria = class(TForm)
+    cdsAuditoria: TClientDataSet;
+    dsAuditoria: TDataSource;
+    dspAuditoria: TDataSetProvider;
+    fqAuditoria: TFDQuery;
+    cdsAuditoriaCODIGO: TIntegerField;
+    cdsAuditoriaTABELA: TStringField;
+    cdsAuditoriaOPERACAO: TStringField;
+    cdsAuditoriaPKEY1: TStringField;
+    cdsAuditoriaPKEY1VALOR: TStringField;
+    cdsAuditoriaPKEY2: TStringField;
+    cdsAuditoriaPKEY2VALOR: TStringField;
+    cdsAuditoriaDATA: TSQLTimeStampField;
+    cdsAuditoriaUSUARIO: TStringField;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    labDataCad: TLabel;
+    labDataAlt: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    labUsuCad: TLabel;
+    labUsuAlt: TLabel;
+    labTitulo: TLabel;
+    PageControl1: TPageControl;
+    tsAuditoria: TTabSheet;
+    DBGrid1: TDBGrid;
+    tsItemAuditoria: TTabSheet;
+    DBGrid2: TDBGrid;
+    fqItAuditoria: TFDQuery;
+    dspItAuditoria: TDataSetProvider;
+    cdsItAuditoria: TClientDataSet;
+    dsItAuditoria: TDataSource;
+    Panel1: TPanel;
+    Image1: TImage;
+    PopupMenu1: TPopupMenu;
+    miVoltar: TMenuItem;
+    Fechar1: TMenuItem;
+    cdsItAuditoriaCODIGO: TIntegerField;
+    cdsItAuditoriaCODAUDITORIA: TIntegerField;
+    cdsItAuditoriaCAMPO: TStringField;
+    cdsItAuditoriaTITULO: TStringField;
+    cdsItAuditoriaVALORANTERIOR: TStringField;
+    cdsItAuditoriaVALORNOVO: TStringField;
+    procedure FormShow(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Image1Click(Sender: TObject);
+    procedure Fechar1Click(Sender: TObject);
+    procedure PopupMenu1Change(Sender: TObject; Source: TMenuItem;
+      Rebuild: Boolean);
+  private
+    { Private declarations }
+    FCDSPadrao: TClientDataSet;
+    FTableName: String;
+    FChaveTable: String;
+    FTitulo: String;
+  public
+    { Public declarations }
+    property CDSPadrao: TClientDataSet read FCDSPadrao write FCDSPadrao;
+    property TableName: String read FTableName write FTableName;
+    property ChaveTable: String read FChaveTable write FChaveTable;
+    property Titulo: String read FTitulo write FTitulo;
+  end;
+
+var
+  FAuditoria: TFAuditoria;
+
+implementation
+
+{$R *.dfm}
+
+uses UDM, UFuncao;
+
+procedure TFAuditoria.DBGrid1DblClick(Sender: TObject);
+begin
+  PageControl1.ActivePage := tsItemAuditoria;
+end;
+
+procedure TFAuditoria.Fechar1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFAuditoria.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  cdsAuditoria.Close;
+  cdsItAuditoria.Close;
+end;
+
+procedure TFAuditoria.FormShow(Sender: TObject);
+begin
+  labTitulo.Caption := Titulo;
+  with cdsAuditoria do
+  begin
+    Close;
+    CommandText := 'SELECT A.* FROM AUDITORIA A ' +
+                   'WHERE A.TABELA = ' + QuotedStr(TableName) +
+                   ' AND A.PKEY1VALOR = ' + QuotedStr(CDSPadrao.FieldByName(ChaveTable).AsString);
+    Open;
+  end;
+  cdsItAuditoria.Open;
+
+  with dm.QuBusca do
+  begin
+    //Inserção
+    Close;
+    sql.Clear;
+    SQL.Add('SELECT A.DATA, A.USUARIO FROM AUDITORIA A ' +
+            'WHERE A.TABELA = ' + QuotedStr(TableName) +
+            ' AND A.OPERACAO = ''INSERÇÃO'' ' +
+            'AND A.PKEY1VALOR = ' + QuotedStr(CDSPadrao.FieldByName(ChaveTable).AsString));
+    Open;
+
+    if not IsEmpty then
+    begin
+      labDataCad.Caption := FormatDateTime('dd/mm/yyyy hh:mm', Fields[0].AsDateTime);
+      labUsuCad.Caption  := Fields[1].AsString;
+    end
+    else
+    begin
+      labDataCad.Caption := '';
+      labUsuCad.Caption  := '';
+    end;
+
+    //Alteração
+    Close;
+    sql.Clear;
+    SQL.Add('SELECT MAX(A.DATA), A.USUARIO FROM AUDITORIA A ' +
+            'WHERE A.TABELA = ' + QuotedStr(TableName) +
+            ' AND A.OPERACAO = ''ALTERAÇÃO'' ' +
+            'AND A.PKEY1VALOR = ' + QuotedStr(CDSPadrao.FieldByName(ChaveTable).AsString) +
+            ' GROUP BY 2');
+    Open;
+
+    if not IsEmpty then
+    begin
+      labDataAlt.Caption := FormatDateTime('dd/mm/yyyy hh:mm', Fields[0].AsDateTime);
+      labUsuAlt.Caption  := Fields[1].AsString;
+    end
+    else
+    begin
+      labDataAlt.Caption := '';
+      labUsuAlt.Caption  := '';
+    end;
+
+    Close;
+  end;
+  OcultarSheets(PageControl1);
+end;
+
+procedure TFAuditoria.Image1Click(Sender: TObject);
+begin
+  PageControl1.ActivePage := tsAuditoria;
+end;
+
+procedure TFAuditoria.PopupMenu1Change(Sender: TObject; Source: TMenuItem;
+  Rebuild: Boolean);
+begin
+  if PageControl1.ActivePage = tsAuditoria then
+    miVoltar.Visible := False
+  else
+    miVoltar.Visible := True;
+end;
+
+end.

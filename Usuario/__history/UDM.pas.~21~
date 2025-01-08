@@ -1,0 +1,87 @@
+unit UDM;
+
+interface
+
+uses
+  SysUtils, Classes, IBCustomDataSet, IBUpdateSQL, DB, IBQuery, IBDatabase,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.Comp.Client, FireDAC.VCLUI.Wait, FireDAC.Comp.UI,
+  FireDAC.Phys.IBBase, FireDAC.Phys.FB, frxCross, frxClass, frxCrypt, frxGZip,
+  frxRich, frxBarcode, frxChart, frxGradient, frxDesgn, frxDMPExport,
+  frxExportImage, frxExportText, frxExportRTF, frxExportPDF, Graphics, Dialogs,
+  System.DateUtils, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, FireDAC.Comp.DataSet, Datasnap.Provider, Datasnap.DBClient;
+
+type
+  TDM = class(TDataModule)
+    Connection: TFDConnection;
+    Transaction: TFDTransaction;
+    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    QuGerarID: TFDQuery;
+    QuBuscarString: TFDQuery;
+    QuBuscaCalcFields: TFDQuery;
+    QuBusca: TFDQuery;
+    cdsItAuditoria: TClientDataSet;
+    cdsItAuditoriaCODIGO: TIntegerField;
+    cdsItAuditoriaCODAUDITORIA: TIntegerField;
+    cdsItAuditoriaCAMPO: TStringField;
+    cdsItAuditoriaTITULO: TStringField;
+    cdsItAuditoriaVALORANTERIOR: TStringField;
+    cdsItAuditoriaVALORNOVO: TStringField;
+    dsItAuditoria: TDataSource;
+    dspItAuditoria: TDataSetProvider;
+    fqItAuditoria: TFDQuery;
+    IBAdmin: TIBDatabase;
+    Transacao: TIBTransaction;
+    cdsUsuario: TClientDataSet;
+    cdsUsuarioCODUSUARIO: TIntegerField;
+    cdsUsuarioNOMEUSER: TStringField;
+    cdsUsuarioSENHA: TStringField;
+    cdsUsuarioATIVO: TStringField;
+    cdsUsuarioCODPERFIL: TIntegerField;
+    dsUsuario: TDataSource;
+    dspUsuario: TDataSetProvider;
+    fqUsuario: TFDQuery;
+    cdsAuditoria: TClientDataSet;
+    cdsAuditoriaCODIGO: TIntegerField;
+    cdsAuditoriaTABELA: TStringField;
+    cdsAuditoriaOPERACAO: TStringField;
+    cdsAuditoriaPKEY1: TStringField;
+    cdsAuditoriaPKEY1VALOR: TStringField;
+    cdsAuditoriaPKEY2: TStringField;
+    cdsAuditoriaPKEY2VALOR: TStringField;
+    cdsAuditoriaDATA: TSQLTimeStampField;
+    cdsAuditoriaUSUARIO: TStringField;
+    dsAuditoria: TDataSource;
+    dspAuditoria: TDataSetProvider;
+    fqAuditoria: TFDQuery;
+    procedure TBUsuarioAfterPost(DataSet: TDataSet);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+implementation
+
+uses UFuncao;
+
+{$R *.dfm}
+
+procedure TDM.TBUsuarioAfterPost(DataSet: TDataSet);
+begin
+  try
+      if  DM.Transacao.InTransaction then
+        DM.Transacao.CommitRetaining;
+  except
+      DM.Transacao.RollbackRetaining;
+  end;
+
+end;
+
+end.

@@ -13,23 +13,11 @@ type
     StatusBar1: TStatusBar;
     MainMenu1: TMainMenu;
     Cadastros1: TMenuItem;
-    TimerAcesso: TTimer;
-    img_logo: TImage;
-    LabData: TLabel;
-    LabHora: TLabel;
-    Timer1: TTimer;
     Usurio1: TMenuItem;
     PopupMenu1: TPopupMenu;
-    Cliente3: TMenuItem;
-    Equipamento1: TMenuItem;
-    MapadeGarantia2: TMenuItem;
-    Senha1: TMenuItem;
-    Vendedor2: TMenuItem;
-    Cliente4: TMenuItem;
-    img_user: TImage;
+    Usuario1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
     procedure Usurio1Click(Sender: TObject);
   private
     FCodUsuario: Integer;
@@ -61,9 +49,8 @@ procedure TFPrinc.FormShow(Sender: TObject);
 var
   varConexao, varArqIni: String;
 begin
-
-{  CaminhoEXE := ExtractFilePath(Application.ExeName);
-  ArqIni     := tIniFile.Create(CaminhoEXE + '\opcao.txt');
+  CaminhoEXE := ExtractFilePath(Application.ExeName);
+  ArqIni     := tIniFile.Create(CaminhoEXE + 'opcoes.txt');
 
   try
     with DM.Connection do
@@ -75,7 +62,6 @@ begin
       Params.Values['User_Name']    := ArqIni.ReadString('CONFIGURACAO', 'User_Name', '');
       Params.Values['Password']     := ArqIni.ReadString('CONFIGURACAO', 'Password', '');
       Params.Values['CharacterSet'] := ArqIni.ReadString('CONFIGURACAO', 'CharacterSet', '');
-//      Params.Values['Protocol']     := ArqIni.ReadString('CONFIGURACAO', 'Protocol', '');
       Params.Values['Server']       := ArqIni.ReadString('CONFIGURACAO', 'Server', '');
 
       Connected := True;
@@ -85,13 +71,6 @@ begin
       mtInformation, [mbOk], 0);
     Application.Terminate;
   end;
-  TimerAcesso.Enabled := true;  }
-end;
-
-procedure TFPrinc.Timer1Timer(Sender: TObject);
-begin
-  LabData.Caption := DateToStr(date);
-  LabHora.Caption := TimeToStr(time);
 end;
 
 procedure TFPrinc.Usurio1Click(Sender: TObject);

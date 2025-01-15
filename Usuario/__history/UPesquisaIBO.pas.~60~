@@ -4,11 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids,IniFiles ,
+  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids,IniFiles, Data.DBXJSON,
   IBQuery, DB, DBClient, Mask, Gauges, ComCtrls, Menus, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, IPPeerClient, REST.Client,
+  Data.Bind.Components, Data.Bind.ObjectScope, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, REST.Response.Adapter, IdIOHandler,
+  IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL;
 
 type
   THackDBGrid = class(TDBGrid);
@@ -39,7 +42,16 @@ type
     Button1: TButton;
     Sair1: TMenuItem;
     StatusBar1: TStatusBar;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    Memo1: TMemo;
+    QuConsulta2: TFDMemTable;
     QuConsulta: TFDQuery;
+    DsConsulta2: TDataSource;
+    IdHTTP1: TIdHTTP;
+    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     procedure FormShow(Sender: TObject);
     procedure BtPesquisarClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -56,7 +68,7 @@ type
     procedure DBGrid1TitleClick(Column: TColumn);
   private
     Cont: Integer;
-    caminho,varSQL,RestoConsulta: String;
+    varSQL,RestoConsulta: String;
     Data: TInifile;
 
     FDescricao : String;
@@ -71,7 +83,7 @@ type
     { Private declarations }
   public
     Query: TClientDataSet;
-
+    procedure JsonToDataset(aDataset : TDataSet; aJSON : string);
     property Descricao  : String read FDescricao write FDescricao;
     property NomeTabela : String read FNomeTabela write FNomeTabela;
     property Chave : String read FChave write FChave;
@@ -80,6 +92,9 @@ type
     { Public declarations }
   end;
 
+const
+   _URL_CONSULTA_CNPJ = 'https://receitaws.com.br/v1/cnpj/%s';
+
 var
   FPesquisaIBO: TFPesquisaIBO;
 
@@ -87,7 +102,7 @@ implementation
 
 {$R *.dfm}
 
-uses UConfGrade, UFuncao;
+uses UFuncao;
 
 procedure TFPesquisaIBO.FormShow(Sender: TObject);
 var x: Integer;
@@ -110,7 +125,7 @@ begin
   DBGrid1.Columns.Clear;
 
   Cont    := 0;
-
+{
   for x := 0 To Query.FieldCount -1 Do
   begin
     If (Query.Fields[x].FieldKind = fkData) and  (Query.Fields[x].IsBlob = False) Then
@@ -136,20 +151,10 @@ begin
     Close;
   end;
 
-  If FileExists(caminho+'/config/_'+Descricao+'.ini') then
-  begin
-    data := TIniFile.Create(caminho+'/config/_'+Descricao+'.ini');
-
-    If data.ReadString('ConsultarPor', 'Campo', '')<>'' then
-      CbConsultarPor.ItemIndex := StrToInt(data.ReadString('ConsultarPor', 'Campo', ''));
-
-    data.Free;
-  end
-  else
-    CBConsultarPor.ItemIndex := 0;
+  CBConsultarPor.ItemIndex := 0;
 
   CbConsultarPorExit(Sender);
-  EdCons.SetFocus;
+  EdCons.SetFocus;         }
 end;
 
 function TFPesquisaIBO.RetornaTipo:String;
@@ -164,20 +169,41 @@ begin
     Abort;
   end;
 
-  case CbTipo.ItemIndex of
+{  case CbTipo.ItemIndex of
     0: retorno := ' like '+#39+EdCons.Text+'%'+#39;
     1: retorno := ' like '+#39+'%'+EdCons.Text+#39;
     2: If Query.FieldByName(Campo).DataType=ftDate Then
          retorno := ' = '+#39+copy(EdCons.Text,4,3)+copy(EdCons.Text,1,3)+copy(EdCons.Text,7,4)+#39
        else
          retorno := ' = '+#39+EdCons.Text+#39;
-  end;
+  end;                 }
   result := retorno;
 end;
 
 procedure TFPesquisaIBO.BtPesquisarClick(Sender: TObject);
+var
+LCNPJ, LResposta : string;
+x:integer;
 begin
-  If Query.FieldByName(Campo).DataType=ftDate Then
+{  IdHTTP1.Request.Accept := 'text/html, */*';
+  IdHTTP1.Request.UserAgent := 'Mozilla/3.0 (compatible; IndyLibrary)';
+  IdHTTP1.Request.ContentType := 'application/x-www-form-urlencoded';
+   LResposta:= IdHTTP1.Get('https://receitaws.com.br/v1/cnpj/82387325000133');   }
+
+    LCNPJ:= Trim(EdCons.text);
+    RESTClient1.BaseURL:= Format(_URL_CONSULTA_CNPJ, [LCNPJ]);
+
+    RESTRequest1.Execute;
+    LResposta:= RESTResponse1.Content;
+
+    for x := 0 To Query.FieldCount -1 Do
+    begin
+          DBGrid1.Columns[x].Width:=50 ;
+          Inc(cont);
+    end;
+
+
+ { If Query.FieldByName(Campo).DataType=ftDate Then
   begin
     If CBTipo.ItemIndex <> 2 then
       CBTipo.ItemIndex := 2;
@@ -233,7 +259,7 @@ begin
   If QuConsulta.RecordCount>0 then
     DBGrid1.SetFocus
   else
-    EdCons.SetFocus;
+    EdCons.SetFocus;  }
 end;
 
 procedure TFPesquisaIBO.DBGrid1DblClick(Sender: TObject);
@@ -253,7 +279,7 @@ end;
 
 procedure TFPesquisaIBO.CbConsultarPorExit(Sender: TObject);
 begin
-  RetornaCampo;
+ { RetornaCampo;
   EdCons.Clear;
   If Query.FieldByName(Campo).DataType=ftDate then
     CbTipo.ItemIndex := 2
@@ -263,12 +289,12 @@ begin
   If Query.FieldByName(Campo).DataType=ftDate then
     EdCons.EditMask := '!99/99/9999;1;'
   else
-    EdCons.EditMask := '';
+    EdCons.EditMask := '';  }
 end;
 
 procedure TFPesquisaIBO.EdConsKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftInteger) or
+{  if (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftInteger) or
      (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftFloat) or
      (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftCurrency) then
     if not (key in ['0'..'9',#8,#13]) then
@@ -278,7 +304,7 @@ begin
   begin
     BtPesquisar.Click;
     key := #0;
-  end;
+  end;   }
 end;
 
 procedure TFPesquisaIBO.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -384,6 +410,28 @@ end;
 procedure TFPesquisaIBO.Sair1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFPesquisaIBO.JsonToDataset(aDataset : TDataSet; aJSON : string);
+var
+JObj: TJSONArray;
+vConv : TCustomJSONDataSetAdapter;
+begin
+    if (aJSON = EmptyStr) then
+    begin
+       Exit;
+    end;
+
+    JObj := TJSONObject.ParseJSONValue(aJSON) as TJSONArray;
+    vConv := TCustomJSONDataSetAdapter.Create(Nil);
+
+    try
+        vConv.Dataset := aDataset;
+        vConv.UpdateDataSet;
+    finally
+        vConv.Free;
+        JObj.Free;
+    end;
 end;
 
 end.

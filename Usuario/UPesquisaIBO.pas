@@ -4,11 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids,IniFiles ,
+  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids,IniFiles, Data.DBXJSON,
   IBQuery, DB, DBClient, Mask, Gauges, ComCtrls, Menus, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, IPPeerClient, REST.Client,
+  Data.Bind.Components, Data.Bind.ObjectScope, IdBaseComponent, IdComponent,
+  IdTCPConnection, IdTCPClient, IdHTTP, REST.Response.Adapter, IdIOHandler,
+  IdIOHandlerSocket, IdIOHandlerStack, IdSSL, IdSSLOpenSSL;
 
 type
   THackDBGrid = class(TDBGrid);
@@ -39,7 +42,16 @@ type
     Button1: TButton;
     Sair1: TMenuItem;
     StatusBar1: TStatusBar;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    Memo1: TMemo;
+    QuConsulta2: TFDMemTable;
     QuConsulta: TFDQuery;
+    DsConsulta2: TDataSource;
+    IdHTTP1: TIdHTTP;
+    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     procedure FormShow(Sender: TObject);
     procedure BtPesquisarClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -71,14 +83,19 @@ type
     { Private declarations }
   public
     Query: TClientDataSet;
-
+    procedure JsonToDataset(aDataset : TDataSet; aJSON : string);
     property Descricao  : String read FDescricao write FDescricao;
     property NomeTabela : String read FNomeTabela write FNomeTabela;
     property Chave : String read FChave write FChave;
     property Campo : String read FCampo write FCampo;
     property Conexao : TFDCustomConnection read FConnection write FConnection;
+
+    procedure AutenticarEListarUsuarios;
     { Public declarations }
   end;
+
+const
+   _URL_CONSULTA_CNPJ = 'http://receitaws.com.br/v1/cnpj/%s';
 
 var
   FPesquisaIBO: TFPesquisaIBO;
@@ -92,7 +109,8 @@ uses UFuncao;
 procedure TFPesquisaIBO.FormShow(Sender: TObject);
 var x: Integer;
 begin
-  QuConsulta.Connection := Conexao;
+  EdCons.SetFocus;
+{  QuConsulta.Connection := Conexao;
 
   Caption            := 'Consulta de ' + Descricao;
   Gauge1.MinValue    := 0;
@@ -109,8 +127,8 @@ begin
   RestoConsulta := '';
   DBGrid1.Columns.Clear;
 
-  Cont    := 0;
-
+  Cont    := 0;     }
+{
   for x := 0 To Query.FieldCount -1 Do
   begin
     If (Query.Fields[x].FieldKind = fkData) and  (Query.Fields[x].IsBlob = False) Then
@@ -139,7 +157,7 @@ begin
   CBConsultarPor.ItemIndex := 0;
 
   CbConsultarPorExit(Sender);
-  EdCons.SetFocus;
+  EdCons.SetFocus;         }
 end;
 
 function TFPesquisaIBO.RetornaTipo:String;
@@ -154,20 +172,43 @@ begin
     Abort;
   end;
 
-  case CbTipo.ItemIndex of
+{  case CbTipo.ItemIndex of
     0: retorno := ' like '+#39+EdCons.Text+'%'+#39;
     1: retorno := ' like '+#39+'%'+EdCons.Text+#39;
     2: If Query.FieldByName(Campo).DataType=ftDate Then
          retorno := ' = '+#39+copy(EdCons.Text,4,3)+copy(EdCons.Text,1,3)+copy(EdCons.Text,7,4)+#39
        else
          retorno := ' = '+#39+EdCons.Text+#39;
-  end;
+  end;                 }
   result := retorno;
 end;
 
 procedure TFPesquisaIBO.BtPesquisarClick(Sender: TObject);
+var
+LCNPJ, LResposta : string;
+x:integer;
 begin
-  If Query.FieldByName(Campo).DataType=ftDate Then
+   if EdCons.Text <> '' then
+   begin
+      LCNPJ:= Trim(EdCons.text);
+      RESTClient1.BaseURL:= Format(_URL_CONSULTA_CNPJ, [LCNPJ]);
+
+      RESTRequest1.Execute;
+      LResposta:= RESTResponse1.Content;
+
+      for x := 0 To Query.FieldCount -1 Do
+      begin
+            DBGrid1.Columns[x].Width:=50 ;
+            Inc(cont);
+      end;
+   end
+   else
+   begin
+      MessageDlg('Informe o CNPJ', mtInformation, [MBOK], 0);
+   end;
+
+
+ { If Query.FieldByName(Campo).DataType=ftDate Then
   begin
     If CBTipo.ItemIndex <> 2 then
       CBTipo.ItemIndex := 2;
@@ -223,7 +264,7 @@ begin
   If QuConsulta.RecordCount>0 then
     DBGrid1.SetFocus
   else
-    EdCons.SetFocus;
+    EdCons.SetFocus;  }
 end;
 
 procedure TFPesquisaIBO.DBGrid1DblClick(Sender: TObject);
@@ -243,7 +284,7 @@ end;
 
 procedure TFPesquisaIBO.CbConsultarPorExit(Sender: TObject);
 begin
-  RetornaCampo;
+ { RetornaCampo;
   EdCons.Clear;
   If Query.FieldByName(Campo).DataType=ftDate then
     CbTipo.ItemIndex := 2
@@ -253,17 +294,17 @@ begin
   If Query.FieldByName(Campo).DataType=ftDate then
     EdCons.EditMask := '!99/99/9999;1;'
   else
-    EdCons.EditMask := '';
+    EdCons.EditMask := '';  }
 end;
 
 procedure TFPesquisaIBO.EdConsKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftInteger) or
+ { if (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftInteger) or
      (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftFloat) or
      (Query.Fields[CbConsultarPor.ItemIndex].DataType = ftCurrency) then
     if not (key in ['0'..'9',#8,#13]) then
       key := #0;
-
+                }
   if key=#13 then
   begin
     BtPesquisar.Click;
@@ -374,6 +415,108 @@ end;
 procedure TFPesquisaIBO.Sair1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFPesquisaIBO.JsonToDataset(aDataset : TDataSet; aJSON : string);
+var
+JObj: TJSONArray;
+vConv : TCustomJSONDataSetAdapter;
+begin
+    if (aJSON = EmptyStr) then
+    begin
+       Exit;
+    end;
+
+    JObj := TJSONObject.ParseJSONValue(aJSON) as TJSONArray;
+    vConv := TCustomJSONDataSetAdapter.Create(Nil);
+
+    try
+        vConv.Dataset := aDataset;
+        vConv.UpdateDataSet;
+    finally
+        vConv.Free;
+        JObj.Free;
+    end;
+end;
+
+procedure TFPesquisaIBO.AutenticarEListarUsuarios;
+var
+  HTTP: TIdHTTP;
+  SSL: TIdSSLIOHandlerSocketOpenSSL;
+  IdTCPClient : TIdTCPClient;
+  RequestBody: TStringStream;
+  ResponseBody: string;
+  JWTToken: string;
+  URLLogin, URLGetUsers: string;
+  JSONResponse: TJSONObject;
+begin
+  // Configuração dos URLs
+  URLLogin := 'https://setacore_apidev.setaerp.com.br/api/v1/admin/auth/login';
+  URLGetUsers := 'https://setacore_apidev.setaerp.com.br/api/v1/admin/users/get-all';
+
+  // Inicializar HTTP e SSL
+  HTTP := TIdHTTP.Create(nil);
+  IdTCPClient := TIdTCPClient.Create;
+  SSL := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+  RequestBody := nil;
+
+  try
+    // Configurar o SSL para suportar TLS 1.2
+    SSL.SSLOptions.Method := sslvTLSv1_2;
+    SSL.SSLOptions.SSLVersions := [sslvTLSv1_2];
+//    SSL.PassThrough:=False;
+    HTTP.IOHandler := SSL;
+
+    // Configurar os cabeçalhos para autenticação
+    HTTP.Request.ContentType := 'application/json';
+    HTTP.Request.Accept := 'application/json';
+
+    // Etapa 1: Autenticar e obter o token JWT
+    RequestBody := TStringStream.Create(
+      '{"login": "teste@gmail.com.br", "password": "UnWh0AW74oYt"}',TEncoding.UTF8);
+
+    HTTP.Post(URLLogin, RequestBody);
+    try
+      ResponseBody := HTTP.Post(URLLogin, RequestBody);
+
+      // Analisar resposta JSON e capturar o token JWT
+      JSONResponse := TJSONObject.ParseJSONValue(ResponseBody) as TJSONObject;
+      if Assigned(JSONResponse) then
+      try
+         JWTToken := JSONResponse.GetValue('token').Value;
+      finally
+        JSONResponse.Free;
+      end;
+
+    except
+      on E: Exception do
+      begin
+        Writeln('Erro durante a autenticação: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    // Configurar o cabeçalho de autorização com o token JWT
+    HTTP.Request.CustomHeaders.Values['Authorization'] := 'Bearer ' + JWTToken;
+
+    // Etapa 2: Listar usuários
+    try
+      ResponseBody := HTTP.Get(URLGetUsers);
+      Writeln('Lista de usuários: ' + ResponseBody);
+    except
+      on E: Exception do
+      begin
+        Writeln('Erro ao listar usuários: ' + E.Message);
+      end;
+    end;
+
+  finally
+    // Liberar recursos
+    HTTP.Free;
+    SSL.Free;
+    if Assigned(RequestBody) then
+      RequestBody.Free;
+  end;
 end;
 
 end.
